@@ -1,0 +1,2 @@
+datetime,share_price,symbol,orderid,instruction,desc,quantity,status,price,trade P/L,share P/L
+2022-07-06T14:16:51+0000,286.03,QQQ_070622C286,5674141624,BUY_TO_OPEN,QQQ Jul 6 2022 286.0 Call,1.0,FILLED,2.06

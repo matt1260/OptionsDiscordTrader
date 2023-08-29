@@ -1,0 +1,18 @@
+time,symbol,alert_price,alert_name,alert_type,entry_price,ITM_contract,option_entry_price
+2023-03-10 18:36:00,SPY,385.27,SPY Bull Pivot Alert: $385.27,Bull Pivot 3
+2023-03-13 11:57:00,SPY,387.5544,SPY Bull Pivot Alert: $387.31,Bull Pivot 1
+2023-03-13 12:55:00,SPY,386.6299,SPY Bull Pivot Alert: $386.1,Bull Pivot 2
+2023-03-13 13:27:00,SPY,385.87,SPY Bull Pivot Alert: $385.88,Bull Pivot 3
+2023-03-13 13:37:00,SPY,386.18,SPY Bull Pivot Alert: $385.52,Bull Pivot 2
+2023-03-14 13:46:00,SPY,388.94,SPY Bull Pivot Alert: $389.0,Bull Pivot 1
+2023-03-16 11:07:00,SPY,391.14,SPY Weak Bull Pivot Alert: $390.804,Bull Pivot Weak,391.53
+2023-03-22 14:38:00,SPY,397.95,SPY Bull Pivot Alert: $397.4,Bull Pivot 1,399.2
+2023-03-22 15:07:00,SPY,396.56,SPY Bull Pivot Alert: $396.77,Bull Pivot 1,397.24
+2023-03-23 11:31:00,SPY,397.92,SPY Bull Pivot Alert: $397.85,Bull Pivot 5,398.3275
+2023-03-24 11:13:00,SPY,389.96,SPY Bull Pivot Alert: $389.9515,Bull Pivot 7,390.34
+2023-04-18 10:52:00,SPY,413.05,SPY Bull Pivot Alert: $413.0,Bull Pivot 1,413.51,SPY_041823C413,1.15
+2023-04-28 10:40:00,SPY,413.39,SPY Bull Pivot Alert: $413.34,Bull Pivot 1,413.895,SPY_042823C413,1.41
+2023-05-03 14:38:00,SPY,410.3,SPY Bull Pivot Alert: $410.87,Bull Pivot 1,411.55,SPY_050323C412,1.81
+2023-05-03 15:05:00,SPY,411.54,SPY Bull Pivot Alert: $411.12,Bull Pivot 1,411.99,SPY_050323C412,1.21
+2023-05-03 15:17:00,SPY,409.35,SPY Bull Pivot Alert: $409.3,Bull Pivot 1,409.9,SPY_050323C410,1.09
+2023-05-04 10:16:00,SPY,405.41,SPY Bull Pivot Alert: $405.3015,Bull Pivot 2,405.74,SPY_050423C405,1.52

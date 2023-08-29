@@ -1,0 +1,11 @@
+discord.py==2.2.3
+httpx==0.22.0
+matplotlib==3.4.3
+mplfinance==0.12.9b7
+pandas==1.5.3
+pandas_ta==0.3.14b
+py_tda_api==0.1.2
+python-dotenv==1.0.0
+pytz==2021.1
+requests==2.27.1
+td==0.4

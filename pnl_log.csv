@@ -1,0 +1,56 @@
+time,alert,pnl,option_pnl
+"March 14, 10:07 AM",QQQ Bull Pivot gain (10m) since last alert at 2023-03-14 09:57:00: $1.05,1.05
+"March 14, 10:23 AM",SPY Bull Pivot gain (10m) since last alert at 2023-03-14 10:13:00: $1.07,1.07
+"March 14, 01:55 PM",SPY Bull Pivot gain (10m) since last alert at 2023-03-14 13:45:00: $0.47,0.47
+"March 24, 10:56 AM",SPX Bull Pivot gain (10m) since last alert at 2023-03-24 10:46:00: $0.41,0.41
+"March 24, 10:59 AM",SPX Bull Pivot gain (10m) since last alert at 2023-03-24 10:49:00: $4.34,4.34
+"March 24, 11:23 AM",SPY Bull Pivot gain (10m) since last alert at 2023-03-24 11:13:00: $0.39,0.39
+"March 24, 11:23 AM",SPX Bull Pivot gain (10m) since last alert at 2023-03-24 11:13:00: $4.1,4.1
+"March 24, 11:44 AM",SPX Bull Pivot gain (10m) since last alert at 2023-03-24 11:34:00: $5.4,5.4
+"March 24, 03:22 PM",SPX Bull Pivot gain (10m) since last alert at 2023-03-24 15:12:00: $11.08,11.08
+"March 27, 11:23 AM",SPX Bull Pivot loss (10m) since last alert at 2023-03-27 11:13:00: $-0.02,-0.02
+"March 27, 11:24 AM",QQQ Bull Pivot gain (10m) since last alert at 2023-03-27 11:13:00: $0.17,0.17
+"March 27, 12:08 PM",SPX Bull Pivot loss (10m) since last alert at 2023-03-27 11:58:00: $-0.75,-0.75
+"March 27, 01:30 PM",SPX Bull Pivot gain (10m) since last alert at 2023-03-27 13:20:00: $4.94,4.94
+"March 27, 02:21 PM",SPX Bull Pivot gain (10m) since last alert at 2023-03-27 14:11:00: $4.45,4.45
+"March 31, 14:54 PM",SPX Bull Pivot gain (10m) since last alert at 2023-03-31 14:44:00: $0.01,0.01
+"April 3, 11:23 PM",SPX Bull Pivot gain (10m) since last alert at 2023-04-03 11:13:00: $2.93,100.00
+"April 04, 09:56 AM","SPX Bull Pivot gain (10m) since last alert at 2023-04-04 09:46:00: $1.53 - SPXW_040423C4120: $-1",1.53,-1
+"April 18, 10:46 AM","SPX Bull Pivot gain (10m) since last alert at 2023-04-18 10:36:00: $1.4, SPXW_041823C4145: $-1",1.4,-1
+"April 18, 11:02 AM",SPY Bull Pivot gain (10m) since last alert at 2023-04-18 10:52:00: $0.08 - SPY_041823C413: $-0.02,0.08,-0.02
+"April 18, 11:53 AM",SPX Bull Pivot loss (10m) since last alert at 2023-04-18 11:42:00: $-1.51 - SPXW_041823C4145: $-1.4,-1.51,-1.4
+"April 19, 09:56 AM",SPX Bull Pivot loss (10m) since last alert at 2023-04-19 09:46:00: $-0.73 - SPXW_041923C4135: $-0.1,-0.73,-0.1
+"April 19, 10:01 AM",SPX Bull Pivot gain (10m) since last alert at 2023-04-19 09:51:00: $0.44 - SPXW_041923C4135: $-0.6,0.44,-0.6
+"April 19, 10:02 AM",SPX Bull Pivot gain (10m) since last alert at 2023-04-19 09:51:00: $0.44 - SPXW_041923C4135: $0.08,0.44,0.08
+"April 20, 11:46 AM","SPX Bull Pivot gain (10m) since last alert at 2023-04-20 11:36:00: $6.23, SPXW_042023C4130: $2",6.23,2
+"April 25, 12:16 PM",SPX Bull Pivot loss (10m) since last alert at 2023-04-25 12:06:00: $-0.83 - SPXW_042523C4100: $-0.42,-0.83,-0.42
+"April 25, 12:47 PM","SPX Bull Pivot gain (10m) since last alert at 2023-04-25 12:37:00: $1.94, SPXW_042523C4095: $1",1.94,1
+"April 25, 12:59 PM","SPX Bear Pivot gain (10m) since last alert at 2023-04-25 12:48:00: $1.99, SPXW_042523P4100: $0",1.99,0
+"April 25, 01:02 PM",SPX Bull Pivot gain (10m) since last alert at 2023-04-25 12:52:00: $0.55 - SPXW_042523C4095: $0.4,0.55,0.4
+"April 25, 01:21 PM",SPX Bull Pivot loss (10m) since last alert at 2023-04-25 13:11:00: $-9.53 - SPXW_042523C4095: $-2.35,-9.53,-2.35
+"April 25, 01:32 PM",SPX Bull Pivot loss (10m) since last alert at 2023-04-25 13:22:00: $-2.85 - SPXW_042523C4085: $-1.4,-2.85,-1.4
+"April 25, 02:00 PM",SPX Bull Pivot gain (10m) since last alert at 2023-04-25 13:50:00: $0.22 - SPXW_042523C4080: $-0.2,0.22,-0.2
+"April 26, 12:48 PM","SPX Bull Pivot gain (10m) since last alert at 2023-04-26 12:38:00: $1.32, SPXW_042623C4075: $0",1.32,0
+"April 26, 01:24 PM",SPX Bull Pivot loss (10m) since last alert at 2023-04-26 13:14:00: $-3.49 - SPXW_042623C4075: $-2.2,-3.49,-2.2
+"April 26, 01:40 PM",SPX Bull Pivot loss (10m) since last alert at 2023-04-26 13:30:00: $-0.32 - SPXW_042623C4070: $-0.98,-0.32,-0.98
+"April 26, 02:09 PM",SPX Bull Pivot loss (10m) since last alert at 2023-04-26 13:59:00: $-2.84 - SPXW_042623C4060: $-2.03,-2.84,-2.03
+"April 27, 06:31 AM",SPX Bull Pivot loss (10m) since last alert at 2023-04-26 14:18:00: $-1.52 - SPXW_042623C4055: $-8.77,-1.52,-8.77
+"April 27, 10:13 AM",QQQ Bull Pivot gain (10m) since last alert at 2023-04-27 10:03:00: $0.68 - QQQ_042723C315: $0.36,0.68,0.36
+"April 27, 12:18 PM","SPX Bull Pivot gain (10m) since last alert at 2023-04-27 12:08:00: $1.02, SPXW_042723C4105: $1",1.02,1
+"April 27, 01:22 PM","SPX Bull Pivot gain (10m) since last alert at 2023-04-27 13:11:00: $0.99, SPXW_042723C4105: $1",0.99,1
+"April 28, 10:50 AM",SPY Bull Pivot gain (10m) since last alert at 2023-04-28 10:40:00: $0.83 - SPY_042823C413: $0.58,0.83,0.58
+"April 28, 12:08 PM","SPX Bull Pivot gain (10m) since last alert at 11:22:00: $13.26, SPXW_042823C4145: $8",13.26,8
+"May 03, 10:59 AM",SPX Bull Pivot gain (10m) since last alert at 2023-05-03 10:49:00: $1.38 - SPXW_050323C4115: $0.11,1.38,0.11
+"May 03, 11:34 AM",SPX Bull Pivot gain (10m) since last alert at 2023-05-03 11:24:00: $0.03 - SPXW_050323C4115: $-1.0,0.03,-1.0
+"May 03, 02:00 PM","SPX Bull Pivot gain (5m) since last alert at 13:53:00: $12.16, SPXW_050323C4130: $5",12.16,5
+"May 03, 02:23 PM","20% gain on call. SPX Bull Pivot gain since last alert at 2023-05-03 14:07:00: $3.25, SPXW_050323C4130: $5",3.25,5
+"May 03, 02:48 PM",SPY Bull Pivot gain (10m) since last alert at 2023-05-03 14:38:00: $0.88 - SPY_050323C412: $-0.35,0.88,-0.35
+"May 03, 02:58 PM",SPX Bull Pivot loss (10m) since last alert at 2023-05-03 14:48:00: $-3.48 - SPXW_050323C4130: $-3.24,-3.48,-3.24
+"May 03, 03:15 PM",SPY Bull Pivot loss (10m) since last alert at 2023-05-03 15:05:00: $-2.09 - SPY_050323C412: $-0.92,-2.09,-0.92
+"May 03, 03:27 PM",SPY Bull Pivot gain (10m) since last alert at 2023-05-03 15:17:00: $0.4 - SPY_050323C410: $-0.16,0.4,-0.16
+"May 04, 10:04 AM",SPX Bull Pivot gain (10m) since last alert at 2023-05-04 09:54:00: $1.58 - SPXW_050423C4065: $-1.9,1.58,-1.9
+"May 04, 10:26 AM",SPY Bull Pivot loss (10m) since last alert at 2023-05-04 10:16:00: $-1.17 - SPY_050423C405: $-0.42,-1.17,-0.42
+"May 04, 10:48 AM","20% gain on call. SPX Bull Pivot gain (10m) since last alert at 2023-05-04 10:37:00: $10.08, SPXW_050423C4050: $6",10.08,6
+"May 04, 12:13 PM","SPX Bull Pivot loss (10m) since last alert at 2023-05-04 12:03:00: $-2.06, SPXW_050423C4050: $-2",-2.06,-2
+"May 04, 12:58 PM","20% gain on call. SPX Bull Pivot gain since last alert at 2023-05-04 12:46:00: $5.85, SPXW_050423C4060: $3",5.85,3
+"May 04, 01:05 PM",SPX Bull Pivot gain (10m) since last alert at 2023-05-04 12:55:00: $7.1 - SPXW_050423C4060: $2.7,7.1,2.7
