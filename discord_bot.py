@@ -45,7 +45,7 @@ account_no = config.get('main', 'account_number')
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-API_KEY = 'PRAXMSGSYTNLPRMZX7XF0Z0ZAST90U2P' 
+API_KEY = os.getenv('API_KEY')
 
 # Initialize Bot Client and Denote The Command Prefix
 intents = discord.Intents().all()
@@ -820,7 +820,7 @@ async def range(ctx, arg): # The name of the function is the name of the command
     print(symbol)
 
     endpoint = r"https://api.tdameritrade.com/v1/marketdata/{}/quotes".format(symbol)
-    payload = {'apikey': 'N1NRGTXWVMGVSTGAZJQL9YTYQ2EXXM44',
+    payload = {'apikey': API_KEY,
             'periodType' : 'day',
             'frequencyType' : 'minute',
             'frequency' : '1',
@@ -842,7 +842,7 @@ async def vix(ctx, *arg):
     
     if not arg:
         endpoint = r"https://api.tdameritrade.com/v1/marketdata/{}/quotes".format('$VIX.X')
-        payload = {'apikey': 'N1NRGTXWVMGVSTGAZJQL9YTYQ2EXXM44',
+        payload = {'apikey': API_KEY,
             'periodType' : 'day',
             'frequencyType' : 'minute',
             'frequency' : '1',
