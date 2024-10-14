@@ -5,7 +5,7 @@ from td.utils.enums import OptionType
 from td.utils.enums import ContractType
 from td.utils.option_chain import OptionChainQuery
 from datetime import datetime
-import datetime # this overrides the previous 'datetime' module
+import datetime  # this overrides the previous 'datetime' module
 import pytz
 import pandas as pd
 from csv import writer
@@ -39,7 +39,8 @@ td_client = TdAmeritradeClient(
 )
 price_history_service = td_client.price_history()
 
-def build_0dte_order(side,symbol):
+
+def build_0dte_order(side, symbol):
     # build the order
     today = datetime.date.today()
 
@@ -54,7 +55,8 @@ def build_0dte_order(side,symbol):
         strike_count='2',
         option_type=OptionType.StandardContracts
     )
-    chain = options_chain_service.get_option_chain(option_chain_query=option_chain_query)
+    chain = options_chain_service.get_option_chain(
+        option_chain_query=option_chain_query)
     status = chain['status']
     if status == 'FAILED':
         print('Failed. Chain does not exist.')
@@ -62,38 +64,43 @@ def build_0dte_order(side,symbol):
     else:
         print('Retrieved current chain.')
 
-    if side == 'long' :
+    if side == 'long':
         print('Building 0dte long order...')
         call_map = chain['callExpDateMap']
-        last_prices = [i['last'] for d in call_map.values() for v in d.values() for i in v]
-        call_map = [i['symbol'] for d in call_map.values() for v in d.values() for i in v]
+        last_prices = [i['last'] for d in call_map.values()
+                       for v in d.values() for i in v]
+        call_map = [i['symbol'] for d in call_map.values()
+                    for v in d.values() for i in v]
         call = call_map[0]
         mark = last_prices[0]
         print('ITM Call:', call)
         print("Last price:", mark)
         return call, mark
-    else :
+    else:
         print('Building 0dte short order...')
         put_map = chain['putExpDateMap']
         put_map = chain['putExpDateMap']
-        last_prices = [i["last"] for d in put_map.values() for v in d.values() for i in v]
-        put_map = [i['symbol'] for d in put_map.values() for v in d.values() for i in v]
+        last_prices = [i["last"] for d in put_map.values()
+                       for v in d.values() for i in v]
+        put_map = [i['symbol'] for d in put_map.values()
+                   for v in d.values() for i in v]
         put = put_map[-1]
         mark = last_prices[-1]
         print('ITM Put:', put)
         print("Last price:", mark)
         return put, mark
 
+
 def get_option_mark(contract):
-  quote_service = td_client.quotes()
+    quote_service = td_client.quotes()
 
-  quote = quote_service.get_quotes(instruments=[contract])
+    quote = quote_service.get_quotes(instruments=[contract])
 
-  lastprice = quote[contract]['lastPrice']
-  bidprice = quote[contract]['bidPrice']
+    lastprice = quote[contract]['lastPrice']
+    bidprice = quote[contract]['bidPrice']
 
-  print(contract + ' last: ' + str(lastprice) + ', bid: ' + str(bidprice))
-  return lastprice, bidprice
+    print(contract + ' last: ' + str(lastprice) + ', bid: ' + str(bidprice))
+    return lastprice, bidprice
 
 
 def get_signal(symbol):
@@ -112,11 +119,12 @@ def get_signal(symbol):
 
     premarket = False
 
-    minute_history = price_history_service.get_price_history(symbol, end_date=eastern_now, extended_hours_needed=premarket, period_type='day', period=2, frequency_type='minute', frequency=1)
+    minute_history = price_history_service.get_price_history(
+        symbol, end_date=eastern_now, extended_hours_needed=premarket, period_type='day', period=2, frequency_type='minute', frequency=1)
 
-    #day_history = price_history_service.get_price_history(symbol, start_date=start_date, end_date=end_date, extended_hours_needed=False, period_type='year', period=10, frequency_type='day', frequency=1)
+    # day_history = price_history_service.get_price_history(symbol, start_date=start_date, end_date=end_date, extended_hours_needed=False, period_type='year', period=10, frequency_type='day', frequency=1)
 
-    if minute_history['candles'] == []: # if no candle data
+    if minute_history['candles'] == []:  # if no candle data
         minute_history = pd.DataFrame(minute_history)
         print("no candle data")
         return None
@@ -129,14 +137,15 @@ def get_signal(symbol):
 
         df = minute_history
 
-        df['datetime'] = pd.to_datetime(df['datetime'], unit='ms') - pd.Timedelta(hours=4)
+        df['datetime'] = pd.to_datetime(
+            df['datetime'], unit='ms') - pd.Timedelta(hours=4)
         df.set_index('datetime', inplace=True)
 
         df['lowestlow_10'] = df['low'].rolling(10).min()
-        open = df['open'] #series
-        close = df['close'] #series
-        high = df['high'] #series
-        low = df['low'] #series
+        open = df['open']  # series
+        close = df['close']  # series
+        high = df['high']  # series
+        low = df['low']  # series
 
     def bullpivot(close, open, high, lowest10):
 
@@ -163,9 +172,8 @@ def get_signal(symbol):
             & (close >= (high - .02)) \
             & (low.shift(1) <= lowest10)
 
-
-        avg1 = ta.ema(close, length=5).shift(1) # ema 5
-        avg2 = ta.ema(close, length=10).shift(1) # ema 10
+        avg1 = ta.ema(close, length=5).shift(1)  # ema 5
+        avg2 = ta.ema(close, length=10).shift(1)  # ema 10
 
         bp7 = ((low.shift(1) + 0.40) < avg1.shift(1)) \
             & ((close.shift(1) + 0.40) < avg1.shift(1)) \
@@ -173,7 +181,6 @@ def get_signal(symbol):
             & (low > low.shift(1)) \
             & (close > open.shift(1)) \
             & ((open.shift(1) - close.shift(1)) > 0.20)
-
 
         return bp, bp2, bp3, bp5, bp7
 
@@ -200,7 +207,7 @@ def get_signal(symbol):
 
         return cl1, cl2, cl3, cl5, cl7, clw
 
-    ## populate CSV table with signals
+    # populate CSV table with signals
 
     # Bull Pivot
     lowest10 = df['lowestlow_10']
@@ -224,9 +231,9 @@ def get_signal(symbol):
     df['close_bullpivot7'] = cl7
     df['close_bullpivotw'] = clw
 
-
     print('Generated signals for ' + symbol + '.')
     df.to_csv(symbol + '_output.csv', index=True)
+
 
 def get_spx_signal():
 
@@ -234,30 +241,55 @@ def get_spx_signal():
     eastern_tz = pytz.timezone('US/Eastern')
     eastern_now = utc_now.astimezone(eastern_tz)
 
-    history = price_history_service.get_price_history('$SPX.X', end_date=eastern_now, extended_hours_needed=False, period_type='day', period=2, frequency_type='minute', frequency=1)
-    history = history['candles']
-    df = pd.DataFrame(history)
-    df['datetime'] = pd.to_datetime(df['datetime'], unit='ms') - pd.Timedelta(hours=4)
-    df.set_index('datetime', inplace=True)
+    history = price_history_service.get_price_history(
+        '$SPX.X', end_date=eastern_now, extended_hours_needed=False,
+        period_type='day', period=2, frequency_type='minute', frequency=1
+    )
 
+    df = pd.json_normalize(history['candles'])
+    df = df.assign(datetime=pd.to_datetime(
+        df['datetime'], unit='ms') - pd.Timedelta(hours=4))
+    df.set_index('datetime', inplace=True)
     df['symbol'] = 'SPX'
+
     print('Successfully downloaded SPX data.')
 
-    # Define the input parameters
     lookback = 30
 
-    # Define the moving averages
     df['sma200'] = df['close'].rolling(window=200).mean()
     df['sma10'] = df['close'].rolling(window=10).mean()
 
-    # Define the bullpivot condition
-    bullpivot = (df['close'] < df['sma200']) & (df['close'] < df['sma10']) & ((df['close'] - df['open']) >= 0.38) & (df['close'] > df['close'].shift(2)) & (df['close'] < df['open'].shift(2)) & (df['open'] < df['close'].shift(1)) & (df['open'] < df['open'].shift(lookback))
+    bullpivot = (
+        (df['close'] < df['sma200']) &
+        (df['close'] < df['sma10']) &
+        ((df['close'] - df['open']) >= 0.38) &
+        (df['close'] > df['close'].shift(2)) &
+        (df['close'] < df['open'].shift(2)) &
+        (df['open'] < df['close'].shift(1)) &
+        (df['open'] < df['open'].shift(lookback))
+    )
 
-    # Define the bullpivot7 condition
-    bullpivot7 = (df['close'] > df['open']) & ((df['close'] - df['open']) >= 0.95 * (df['high'] - df['low'])) & (df['close'] > df['close'].shift(2)) & (df['close'] > df['open'].shift(2)) & (df['close'] > df['close'].shift(6)) & (df['open'] < df['open'].shift(6)) & (df['open'] < df['open'].shift(lookback))
+    bullpivot7 = (
+        (df['close'] > df['open']) &
+        ((df['close'] - df['open']) >= 0.95 * (df['high'] - df['low'])) &
+        (df['close'] > df['close'].shift(2)) &
+        (df['close'] > df['open'].shift(2)) &
+        (df['close'] > df['close'].shift(6)) &
+        (df['open'] < df['open'].shift(6)) &
+        (df['open'] < df['open'].shift(lookback))
+    )
 
-    # Define the bullpivot4 condition
-    bullpivot4 = (df['close'] < df['sma200']) & ((df['close'] - df['open']) >= 0.38) & (df['close'] > df['close'].shift(2)) & (df['close'] > df['open'].shift(2)) & (df['open'] < df['close'].shift(1)) & (df['open'].shift(1) <= df['close'].shift(2)) & (df['open'].shift(2) > df['close'].shift(1)) & (df['open'].shift(2) > df['open'].shift(1)) & (df['open'] < df['open'].shift(lookback))
+    bullpivot4 = (
+        (df['close'] < df['sma200']) &
+        ((df['close'] - df['open']) >= 0.38) &
+        (df['close'] > df['close'].shift(2)) &
+        (df['close'] > df['open'].shift(2)) &
+        (df['open'] < df['close'].shift(1)) &
+        (df['open'].shift(1) <= df['close'].shift(2)) &
+        (df['open'].shift(2) > df['close'].shift(1)) &
+        (df['open'].shift(2) > df['open'].shift(1)) &
+        (df['open'] < df['open'].shift(lookback))
+    )
 
     df['bullpivot'] = bullpivot
     df['bullpivot4'] = bullpivot4
@@ -275,11 +307,11 @@ def get_spx_signal():
     df['OnBand'] = (df['low'] <= df['LowerBand'] * 1.001)
 
     # Define the bullPivotNearLowerBand condition
-    df['bullPivotNearLowerBand'] = (df['lowestlow'].shift(1).rolling(window=10).min() <= df['LowerBand'] * 1.002) & (df['low'] <= df['LowerBand'] * 1.002)
+    df['bullPivotNearLowerBand'] = (df['lowestlow'].shift(1).rolling(window=10).min(
+    ) <= df['LowerBand'] * 1.002) & (df['low'] <= df['LowerBand'] * 1.002)
 
     # Define the superbullpivot signal
     df['superbullpivot'] = df['doublepivot'] & df['bullPivotNearLowerBand'] & df['base']
-
 
     df['close_bullpivot'] = df['bullpivot'].shift(10)
     df['close_bullpivot4'] = df['bullpivot4'].shift(10)
@@ -290,129 +322,132 @@ def get_spx_signal():
     print('Generated signals for SPX.')
     df.to_csv('SPX_output.csv', index=True)
 
+
 def process_signal(symbol):
 
-        # get latest minute data
-        #df = pd.read_csv('TEST_output.csv')
-        filename = symbol + '_output.csv'
-        max_attempts = 5
-        pause_seconds = 1
-        # loop to attempt loading the file multiple times
-        for i in range(max_attempts):
-            try:
-                # try to load the file
-                df = pd.read_csv(filename)
-                break  # exit the loop if successful
-            except pd.errors.EmptyDataError:
-                # handle the error and pause before trying again
-                print('Error: No data found in file. Retrying...')
-                time.sleep(pause_seconds)
+    # get latest minute data
+    # df = pd.read_csv('TEST_output.csv')
+    filename = symbol + '_output.csv'
+    max_attempts = 5
+    pause_seconds = 1
+    # loop to attempt loading the file multiple times
+    for i in range(max_attempts):
+        try:
+            # try to load the file
+            df = pd.read_csv(filename)
+            break  # exit the loop if successful
+        except pd.errors.EmptyDataError:
+            # handle the error and pause before trying again
+            print('Error: No data found in file. Retrying...')
+            time.sleep(pause_seconds)
 
-        if 'df' not in locals():
-            print('Error: Unable to load data after {} attempts'.format(max_attempts))
-            return
+    if 'df' not in locals():
+        print('Error: Unable to load data after {} attempts'.format(max_attempts))
+        return
 
+    else:
+        print('Retrieved ' + symbol + ' CSV output.')
+
+    # last line in csv file changes several times per minute, so get second to last line
+    bull_pivot, bull_pivot2, bull_pivot3, bull_pivot5, bull_pivot7, bull_pivotw = [
+        df.iloc[-2][f'bull_pivot{i}'] for i in ['', '2', '3', '5', '7', 'w']]
+
+    close = df.iloc[-2]['close']
+    previous_low = df.iloc[-3]['low']
+    time = str(df.iloc[-2]['datetime'])
+    symbol = df.iloc[-1]['symbol']
+
+    print(time, symbol + ' last close: ' + str(close))
+
+    if previous_low > 0:
+
+        # get pivot alert
+        if any(val == True for val in [bull_pivot, bull_pivot2, bull_pivot3, bull_pivot5, bull_pivot7]):
+            pivot_alert = symbol + " Bull Pivot Alert: $" + str(previous_low)
+            if bull_pivot:
+                type = 'Bull Pivot 1'
+            elif bull_pivot2:
+                type = 'Bull Pivot 2'
+            elif bull_pivot3:
+                type = 'Bull Pivot 3'
+            elif bull_pivot5:
+                type = 'Bull Pivot 5'
+            elif bull_pivot7:
+                type = 'Bull Pivot 7'
+
+            print(time + ': ' + pivot_alert + ', (' + type + ')')
+
+        elif bull_pivotw:
+            pivot_alert = symbol + \
+                " Weak Bull Pivot Alert: $" + str(previous_low)
+            print(pivot_alert)
+            type = 'Bull Pivot Weak'
         else:
-            print('Retrieved ' + symbol + ' CSV output.')
+            print(time + ": " + "No Pivot Alert")
+            pivot_alert = None
+            type = None
 
+        return pivot_alert, type
 
-        # last line in csv file changes several times per minute, so get second to last line
-        bull_pivot, bull_pivot2, bull_pivot3, bull_pivot5, bull_pivot7, bull_pivotw = [df.iloc[-2][f'bull_pivot{i}'] for i in [ '', '2', '3', '5', '7', 'w']]
+    else:
+        print("No Data, PreMarket time")
+        return None, None, None, None
 
-        close = df.iloc[-2]['close']
-        previous_low = df.iloc[-3]['low']
-        time = str(df.iloc[-2]['datetime'])
-        symbol = df.iloc[-1]['symbol']
-
-        print(time, symbol + ' last close: ' + str(close))
-
-        if previous_low > 0:
-
-            # get pivot alert
-            if any(val == True for val in [bull_pivot, bull_pivot2, bull_pivot3, bull_pivot5, bull_pivot7]):
-                pivot_alert = symbol + " Bull Pivot Alert: $" + str(previous_low)
-                if bull_pivot:
-                    type = 'Bull Pivot 1'
-                elif bull_pivot2:
-                    type = 'Bull Pivot 2'
-                elif bull_pivot3:
-                    type = 'Bull Pivot 3'
-                elif bull_pivot5:
-                    type = 'Bull Pivot 5'
-                elif bull_pivot7:
-                    type = 'Bull Pivot 7'
-
-                print(time + ': ' + pivot_alert + ', (' + type + ')')
-
-
-            elif bull_pivotw:
-                pivot_alert = symbol + " Weak Bull Pivot Alert: $" + str(previous_low)
-                print(pivot_alert)
-                type = 'Bull Pivot Weak'
-            else:
-                print (time + ": " + "No Pivot Alert")
-                pivot_alert = None
-                type = None
-
-            return pivot_alert, type
-
-        else:
-            print ("No Data, PreMarket time")
-            return None, None, None, None
 
 def process_spx_signal():
 
-        df = pd.read_csv('SPX_output.csv')
+    df = pd.read_csv('SPX_output.csv')
 
-        # last line in csv file changes several times per minute, so get second to last line
-        bullpivot = df.iloc[-2]['bullpivot']
-        bullpivot4 = df.iloc[-2]['bullpivot4']
-        bullpivot7 = df.iloc[-2]['bullpivot7']
-        doublepivot = df.iloc[-2]['doublepivot']
-        superbullpivot = df.iloc[-2]['superbullpivot']
+    # last line in csv file changes several times per minute, so get second to last line
+    bullpivot = df.iloc[-2]['bullpivot']
+    bullpivot4 = df.iloc[-2]['bullpivot4']
+    bullpivot7 = df.iloc[-2]['bullpivot7']
+    doublepivot = df.iloc[-2]['doublepivot']
+    superbullpivot = df.iloc[-2]['superbullpivot']
 
-        close = df.iloc[-2]['close']
-        previous_low = df.iloc[-3]['low']
-        time = str(df.iloc[-2]['datetime'])
-        symbol = df.iloc[-1]['symbol']
+    close = df.iloc[-2]['close']
+    previous_low = df.iloc[-3]['low']
+    time = str(df.iloc[-2]['datetime'])
+    symbol = df.iloc[-1]['symbol']
 
-        print(time, symbol + ' last close: ' + str(close))
+    print(time, symbol + ' last close: ' + str(close))
 
-        if previous_low > 0:
+    if previous_low > 0:
 
-            # get pivot alert
-            if any(val == True for val in [bullpivot, bullpivot4, bullpivot7]):
-                pivot_alert = symbol + " Bull Pivot Alert: $" + str(previous_low)
-                if bullpivot:
-                    type = 'Bull Pivot 1'
-                elif bullpivot4:
-                    type = 'Bull Pivot 4'
-                elif bullpivot7:
-                    type = 'Bull Pivot 7'
+        # get pivot alert
+        if any(val == True for val in [bullpivot, bullpivot4, bullpivot7]):
+            pivot_alert = symbol + " Bull Pivot Alert: $" + str(previous_low)
+            if bullpivot:
+                type = 'Bull Pivot 1'
+            elif bullpivot4:
+                type = 'Bull Pivot 4'
+            elif bullpivot7:
+                type = 'Bull Pivot 7'
 
-                print(time + ': ' + pivot_alert + ', (' + type + ')')
+            print(time + ': ' + pivot_alert + ', (' + type + ')')
 
-            elif superbullpivot:
-                pivot_alert = symbol + " Super Bull Pivot Alert: $" + str(previous_low)
-                print(pivot_alert)
-                type = 'Super Bull Pivot'
+        elif superbullpivot:
+            pivot_alert = symbol + \
+                " Super Bull Pivot Alert: $" + str(previous_low)
+            print(pivot_alert)
+            type = 'Super Bull Pivot'
 
-            elif doublepivot:
-                pivot_alert = symbol + " Double Bull Pivot Alert: $" + str(previous_low)
-                print(pivot_alert)
-                type = 'Double Bull Pivot'
-
-            else:
-                print (time + ": " + "No SPX Pivot Alert")
-                pivot_alert = None
-                type = None
-
-            return pivot_alert, type
+        elif doublepivot:
+            pivot_alert = symbol + \
+                " Double Bull Pivot Alert: $" + str(previous_low)
+            print(pivot_alert)
+            type = 'Double Bull Pivot'
 
         else:
-            print ("No Data, PreMarket time")
-            return None, None, None, None
+            print(time + ": " + "No SPX Pivot Alert")
+            pivot_alert = None
+            type = None
 
+        return pivot_alert, type
+
+    else:
+        print("No Data, PreMarket time")
+        return None, None, None, None
 
 
 def save_history(symbol):
@@ -422,11 +457,12 @@ def save_history(symbol):
     t_ms = int(t * 1000)
     t_ms = t_ms + 85000000
 
-    print ('Archiving intraday data from TD Ameritrade...')
+    print('Archiving intraday data from TD Ameritrade...')
     price_history_service = td_client.price_history()
-    minute_history = price_history_service.get_price_history(symbol, end_date=t_ms, extended_hours_needed=False, period_type='day', period=10, frequency_type='minute', frequency=1)
+    minute_history = price_history_service.get_price_history(
+        symbol, end_date=t_ms, extended_hours_needed=False, period_type='day', period=10, frequency_type='minute', frequency=1)
 
-    if minute_history['candles'] == []: # if no candle data
+    if minute_history['candles'] == []:  # if no candle data
         minute_history = pd.DataFrame(minute_history)
         print("no candle data")
 
@@ -437,23 +473,23 @@ def save_history(symbol):
         minute_history['symbol'] = symbol
         minute_history.insert(0, 'symbol', minute_history.pop('symbol'))
 
-
         # drop last row if zero (pre market)
         if minute_history.iloc[-1]['open'] == 0:
             minute_history = minute_history.drop(minute_history.index[-1])
 
-        minute_history['datetime'] = pd.to_datetime(minute_history['datetime'], unit='ms')
+        minute_history['datetime'] = pd.to_datetime(
+            minute_history['datetime'], unit='ms')
         minute_history.set_index('datetime', inplace=True)
 
         file = '../data/' + symbol + '_1m_history.csv'
         if os.path.exists(file):
             print('File exists, adding new data.')
             original = pd.read_csv(file, index_col='datetime')
-            merged = pd.concat([original, minute_history]).drop_duplicates(keep='last')
+            merged = pd.concat([original, minute_history]
+                               ).drop_duplicates(keep='last')
             merged.to_csv(file, index=True)
         else:
             print('File does not exist, creating new one.')
             minute_history.to_csv(file, index=True)
 
         print('Successfully appended ' + symbol + ' intraday data.')
-
